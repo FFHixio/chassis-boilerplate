@@ -6,6 +6,13 @@ template. The template also includes the full NGN library (including
 data capabilities). Finally, it contains a build system to make development
 a little easier.
 
+## Ridiculously Fast Quickstart
+
+_Requires Node v6.0.0+ and gulp pre-installed._
+
+Run `npm i -g chassistpl`, then run `chassistpl` in the directory where you
+want to generate the template.
+
 ## Quickstart
 
 First, you'll need Node.js 6.0.0+. We recommend installing it with
