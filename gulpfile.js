@@ -163,7 +163,8 @@ gulp.task('copy', function (next) {
 
 gulp.task('watch', function (next) {
   gulp.watch([
-    DIR.SASS + './sass/**/*.s*ss',
+    DIR.SASS,
+    DIR.SASS + '/**/*.s*ss',
     require('chassis-sass').includePaths,
     require('chassis-detailer').includePaths
   ], gulp.series(['build']))
