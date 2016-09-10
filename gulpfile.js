@@ -201,6 +201,22 @@ gulp.task('watch', function (next) {
     }
 
     fs.copySync(delta, delta.replace(DIR.SOURCE, DIR.DIST))
+  }).on('add', function (filepath) {
+    if (['.html', '.htm'].indexOf(path.extname(filepath)) >= 0) {
+      let content = fs.readFileSync(filepath).toString()
+      if (content.indexOf('<!-- LIVERELOAD -->') >= 0) {
+        content = content.replace(/<\!-- LIVERELOAD -->/gi, '<script src="http://localhost:' + livereloadport + '/livereload.js"></script>')
+        gutil.log('Build     ' + chalk.gray('Applying Livereload code.'))
+        fs.writeFileSync(filepath.replace(DIR.SOURCE, DIR.DIST), content)
+        return
+      }
+    }
+
+    gutil.log('Build     ' + chalk.gray('Copying ' + delta.replace(DIR.SOURCE, '') + ' to distribution.'))
+    fs.copySync(filepath, filepath.replace(DIR.SOURCE, DIR.DIST))
+  }).on('unlink', function (filepath) {
+    fs.unlinkSync(filepath)
+    gutil.log('Build     ' + chalk.gray('Removed ' + filepath.replace(DIR.SOURCE)))
   })
 
   // Start watching the distribution directory after the first build.
